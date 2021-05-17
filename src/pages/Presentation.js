@@ -71,7 +71,7 @@ export default () => {
 
   return (
     <>
-      <Navbar variant="dark" expand="lg" bg="dark" className="navbar-transparent navbar-theme-primary sticky-top">
+      <Navbar variant="light" expand="lg" bg="light" className="navbar-light navbar-theme-secondary sticky-top">
         <Container className="position-relative justify-content-between px-3">
           <Navbar.Brand as={HashLink} to="#home" className="me-lg-3 d-flex align-items-center">
             <FontAwesomeIcon icon={faHome}/>
@@ -92,42 +92,36 @@ export default () => {
           </div>
         </Container>
       </Navbar>
-      <section className="section-header overflow-hidden pt-5 pt-lg-6 pb-9 pb-lg-12 bg-primary" id="home">
+      <section className="section-header overflow-hidden pt-5 pt-lg-6 pb-9 pb-lg-12 bg-color-light" id="home">
         <Container>
         <Row className="justify-content-md-center">
 
         <Col xs={12} sm={6} xl={3} className="mb-4">
           <SimpleCard
-            category="Unresolved"
-            title="15"
-            period="Feb 1 - Apr 1"
-            percentage={18.2}
-            icon={faChartLine}
-            iconColor="shape-secondary"
+            title="Unresolved"
+            value="15"
           />
         </Col>
 
         <Col xs={12} sm={6} xl={3} className="mb-4">
-          <CounterWidget
-            category="Overdue"
-            title="$43,594"
-            period="Feb 1 - Apr 1"
-            percentage={28.4}
-            icon={faCashRegister}
-            iconColor="shape-tertiary"
+          <SimpleCard
+            title="Overdue"
+            value="17"
           />
         </Col>
 
         <Col xs={12} sm={6} xl={3} className="mb-4">
-          <CircleChartWidget
-            title="Open"
-            data={trafficShares} />
+          <SimpleCard
+            title="Resolved"
+            value="35"
+          />
         </Col>
         
         <Col xs={12} sm={6} xl={3} className="mb-4">
-          <CircleChartWidget
+        <SimpleCard
             title="Archived"
-            data={trafficShares} />
+            value="64"
+          />
         </Col>
         <Col xs={12} className="mb-4 d-none d-sm-block">
           <SalesValueWidget
