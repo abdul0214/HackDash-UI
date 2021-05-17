@@ -11,6 +11,8 @@ import ThemesbergLogo from "../assets/img/themesberg-logo.svg";
 import { faCashRegister, faChartLine} from '@fortawesome/free-solid-svg-icons';
 
 import { CounterWidget, CircleChartWidget, SalesValueWidget } from "../components/Widgets";
+import { SimpleCard } from "../components/SimpleCard";
+
 import { trafficShares } from "../data/charts";
 
 export default () => {
@@ -93,17 +95,11 @@ export default () => {
       <section className="section-header overflow-hidden pt-5 pt-lg-6 pb-9 pb-lg-12 bg-primary" id="home">
         <Container>
         <Row className="justify-content-md-center">
-        <Col xs={12} className="mb-4 d-none d-sm-block">
-          <SalesValueWidget
-            title="Hackathon Messages"
-            value="16,000"
-            percentage={10.57}
-          />
-        </Col>
+
         <Col xs={12} sm={6} xl={3} className="mb-4">
-          <CounterWidget
+          <SimpleCard
             category="Unresolved"
-            title="Issues"
+            title="15"
             period="Feb 1 - Apr 1"
             percentage={18.2}
             icon={faChartLine}
@@ -132,6 +128,13 @@ export default () => {
           <CircleChartWidget
             title="Archived"
             data={trafficShares} />
+        </Col>
+        <Col xs={12} className="mb-4 d-none d-sm-block">
+          <SalesValueWidget
+            title="Hackathon Messages"
+            value="16,000"
+            percentage={10.57}
+          />
         </Col>
       </Row>
       <Col xs={12} xl={12} className="mb-4">
