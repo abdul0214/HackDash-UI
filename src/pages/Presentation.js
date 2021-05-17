@@ -14,6 +14,7 @@ import { CounterWidget, CircleChartWidget, SalesValueWidget } from "../component
 import { SimpleCard } from "../components/SimpleCard";
 
 import { trafficShares } from "../data/charts";
+import { MessagesTrendWidget } from "../components/MessagesTrendWidget";
 
 export default () => {
   // const PagePreview = (props) => {
@@ -124,7 +125,7 @@ export default () => {
           />
         </Col>
         <Col xs={12} className="mb-4 d-none d-sm-block">
-          <SalesValueWidget
+          <MessagesTrendWidget
             title="Hackathon Messages"
             value="16,000"
             percentage={10.57}
