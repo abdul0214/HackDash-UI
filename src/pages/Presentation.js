@@ -1,19 +1,15 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faDownload,faHome } from "@fortawesome/free-solid-svg-icons";
-import { Col, Row, Card, Image, Button, Container, Navbar, Nav } from '@themesberg/react-bootstrap';
+import {faHome } from "@fortawesome/free-solid-svg-icons";
+import { Col, Row, Card, Image, Container, Navbar, Nav } from '@themesberg/react-bootstrap';
 // import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
 import { PageVisitsTable } from "../components/Tables";
 
 import ThemesbergLogo from "../assets/img/themesberg-logo.svg";
 
-import { faCashRegister, faChartLine} from '@fortawesome/free-solid-svg-icons';
-
-import { CounterWidget, CircleChartWidget, SalesValueWidget } from "../components/Widgets";
 import { SimpleCard } from "../components/SimpleCard";
 
-import { trafficShares } from "../data/charts";
 import { MessagesTrendWidget } from "../components/MessagesTrendWidget";
 
 export default () => {
