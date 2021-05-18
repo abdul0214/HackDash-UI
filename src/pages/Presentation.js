@@ -4,13 +4,13 @@ import {faHome } from "@fortawesome/free-solid-svg-icons";
 import { Col, Row, Card, Image, Container, Navbar, Nav } from '@themesberg/react-bootstrap';
 // import { Link } from 'react-router-dom';
 import { HashLink } from 'react-router-hash-link';
-import { PageVisitsTable } from "../components/Tables";
 
 import ThemesbergLogo from "../assets/img/themesberg-logo.svg";
 
 import { SimpleCard } from "../components/SimpleCard";
 
 import { MessagesTrendWidget } from "../components/MessagesTrendWidget";
+import { TicketsTable } from "../components/TicketsTable";
 
 export default () => {
   // const PagePreview = (props) => {
@@ -89,6 +89,9 @@ export default () => {
           </div>
         </Container>
       </Navbar>
+      <section className="section-header overflow-hidden pt-2 pt-lg-4 pl-2 pl-lg-2 ml-2 ml-lg-2 pb-3 pb-lg-3 bg-color-light">
+        Hi
+      </section>
       <section className="section-header overflow-hidden pt-5 pt-lg-6 pb-9 pb-lg-12 bg-color-light" id="home">
         <Container>
         <Row className="justify-content-md-center">
@@ -133,7 +136,7 @@ export default () => {
             <Col xs={12} xl={12} className="mb-4">
               <Row>
                 <Col xs={12} className="mb-4">
-                  <PageVisitsTable />
+                  <TicketsTable />
                 </Col>
                 </Row>
                 </Col>
