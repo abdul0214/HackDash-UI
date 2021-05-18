@@ -17,4 +17,4 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 
 
-![Current State](public\currentStatePage1.PNG)
+![Current State](public/currentStatePage1.PNG)
