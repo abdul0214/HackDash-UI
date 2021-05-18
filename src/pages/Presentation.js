@@ -89,11 +89,16 @@ export default () => {
           </div>
         </Container>
       </Navbar>
-      <section className="section-header overflow-hidden pt-2 pt-lg-4 pl-2 pl-lg-2 ml-2 ml-lg-2 pb-3 pb-lg-3 bg-color-light">
-        Hi
-      </section>
-      <section className="section-header overflow-hidden pt-5 pt-lg-6 pb-9 pb-lg-12 bg-color-light" id="home">
+      <section className="section-header overflow-hidden pt-2 pt-lg-4 pb-9 pb-lg-12 bg-color-light" id="home">
         <Container>
+        <Row className="d-flex flex-wrap flex-md-nowrap align-items-center py-4">
+        <Col className="d-block mb-2 mt-0 mb-md-0">
+          <h1 className="h2">Overview</h1>
+          <p className="mb-0">
+            Overview of Hackathon
+          </p>
+        </Col>
+      </Row>
         <Row className="justify-content-md-center">
 
         <Col xs={12} sm={6} xl={3} className="mb-4">
