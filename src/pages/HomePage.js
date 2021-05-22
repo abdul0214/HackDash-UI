@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Route, Switch, Redirect } from "react-router-dom";
 import { Routes } from "../routes";
+import { Container} from '@themesberg/react-bootstrap';
 
 // pages
 import Presentation from "./Presentation";
 import Upgrade from "./Upgrade";
 import DashboardOverview from "./dashboard/DashboardOverview";
 import Transactions from "./Transactions";
+import Participants from "./Participants";
 import Settings from "./Settings";
 import BootstrapTables from "./tables/BootstrapTables";
 import Signin from "./examples/Signin";
@@ -28,7 +30,7 @@ import DocsChangelog from "./documentation/DocsChangelog";
 
 // components
 import Sidebar from "../components/Sidebar";
-import Navbar from "../components/Navbar";
+import HackNavbar from "../components/HackNavbar";
 import Footer from "../components/Footer";
 import Preloader from "../components/Preloader";
 
@@ -61,6 +63,24 @@ const RouteWithLoader = ({ component: Component, ...rest }) => {
     <Route {...rest} render={props => ( <> <Preloader show={loaded ? false : true} /> <Component {...props} /> </> ) } />
   );
 };
+const RouteWithNavbar = ({ component: Component, ...rest }) => {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => setLoaded(true), 1000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  return (
+    <Route {...rest} render={props => (
+      <>
+          <HackNavbar />
+          <Route {...rest} render={props => ( <> <Preloader show={loaded ? false : true} /> <Component {...props} /> </> ) } />
+      </>
+    )}
+    />
+  );
+};
 
 const RouteWithSidebar = ({ component: Component, ...rest }) => {
   const [loaded, setLoaded] = useState(false);
@@ -87,7 +107,7 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
         <Preloader show={loaded ? false : true} />
         <Sidebar />
         <main className="content">
-          <Navbar />
+          <HackNavbar />
           <Component {...props} />
           <Footer toggleSettings={toggleSettings} showSettings={showSettings} />
         </main>
@@ -99,7 +119,9 @@ const RouteWithSidebar = ({ component: Component, ...rest }) => {
 
 export default () => (
   <Switch>
-    <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} />
+    {/* <RouteWithLoader exact path={Routes.Presentation.path} component={Presentation} /> */}
+    <RouteWithNavbar exact path={Routes.Presentation.path} component={Presentation} />
+
     <RouteWithLoader exact path={Routes.Signin.path} component={Signin} />
     <RouteWithLoader exact path={Routes.Signup.path} component={Signup} />
     <RouteWithLoader exact path={Routes.ForgotPassword.path} component={ForgotPassword} />
@@ -111,7 +133,8 @@ export default () => (
     {/* pages */}
     <RouteWithSidebar exact path={Routes.DashboardOverview.path} component={DashboardOverview} />
     <RouteWithSidebar exact path={Routes.Upgrade.path} component={Upgrade} />
-    <RouteWithSidebar exact path={Routes.Transactions.path} component={Transactions} />
+    <RouteWithNavbar exact path={Routes.Transactions.path} component={Transactions} />
+    <RouteWithNavbar exact path={Routes.Participants.path} component={Participants} />
     <RouteWithSidebar exact path={Routes.Settings.path} component={Settings} />
     <RouteWithSidebar exact path={Routes.BootstrapTables.path} component={BootstrapTables} />
 
