@@ -9,8 +9,6 @@ import {
   Badge,
 } from "@themesberg/react-bootstrap";
 export const TicketsTable = () => {
-  const [showDefault, setShowDefault] = useState(false);
-  const handleClose = () => setShowDefault(false);
   const pageVisits = [
     {
       id: 1,
@@ -53,11 +51,25 @@ export const TicketsTable = () => {
       name: "EarlyBirds",
     },
   ];
+
+  const [showDefault, setShowDefault] = useState(false);
+  const handleClose = () => setShowDefault(false);
+  const row = pageVisits[0];
+  // const [row, setRow] = useState([{}]);
+  // const handleClick = (data) => {
+  //   console.log(data);
+  //   setRow({
+  //     ...row,
+  //     data,
+  //   });
+  //   console.log(row);
+  //   setShowDefault(true);
+  // };
   const TableRow = (props) => {
-    const { id, type, message, time, name } = props;
+    const { id, type, message, joins, time, name } = props;
     return (
       <tr onClick={() => setShowDefault(true)}>
-        <td scope="row">
+        <td>
           {id}-{type}
         </td>
         {/* <td>{message}</td> */}
@@ -112,34 +124,57 @@ export const TicketsTable = () => {
       </Card>
       <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
         <Modal.Header>
-          <Modal.Title className="h6">Terms of Service</Modal.Title>
+          <Modal.Title className="h6">Issue Details</Modal.Title>
           <Button variant="close" aria-label="Close" onClick={handleClose} />
         </Modal.Header>
         <Modal.Body>
           <p>
-            With less than a month to go before the European Union enacts new
-            consumer privacy laws for its citizens, companies around the world
-            are updating their terms of service agreements to comply.
+            Team Name: <strong className="me-auto ms-2">{row.name}</strong>
           </p>
           <p>
-            The European Union’s General Data Protection Regulation (G.D.P.R.)
-            goes into effect on May 25 and is meant to ensure a common set of
-            data rights in the European Union. It requires organizations to
-            notify users as soon as possible of high-risk data breaches that
-            could personally affect them.
+            Issue Type: <strong className="me-auto ms-2">{row.type}</strong>
+          </p>
+          <p>
+            Message:{" "}
+            <strong className="me-auto ms-2">
+              &nbsp;&nbsp;&nbsp; {row.message}
+            </strong>
+          </p>
+          <p>
+            Joins:{" "}
+            {row.joins.map((join) => (
+              <strong key={`page-visit-${join}`} className="me-auto ms-2">
+                {join},
+              </strong>
+            ))}
+          </p>
+          <p>
+            Time: <strong className="me-auto ms-2">{row.time}m ago</strong>
           </p>
         </Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            I Got It
-          </Button>
-          <Button
-            variant="link"
-            className="text-gray ms-auto"
-            onClick={handleClose}
-          >
-            Close
-          </Button>
+        <Modal.Footer className="justify-content-between">
+          <div>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+          </div>
+          <div className="align-items-end">
+            <Button
+              variant="success"
+              className="text-white"
+              onClick={handleClose}
+            >
+              RESOLVE
+            </Button>
+            &nbsp;
+            <Button
+              variant="danger"
+              className="text-white"
+              onClick={handleClose}
+            >
+              PIN
+            </Button>
+          </div>
         </Modal.Footer>
       </Modal>
     </>
