@@ -1,22 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  Row,
-  Col,
-  Nav,
-  Image,
-  Navbar,
-  Container,
-  ListGroup,
-} from "@themesberg/react-bootstrap";
-import { HashLink } from "react-router-hash-link";
+import { Nav, Navbar, Container } from "@themesberg/react-bootstrap";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import { Routes } from "../routes";
 
-import NOTIFICATIONS_DATA from "../data/notifications";
-
-export default (props) => {
+export default () => {
   return (
     <Navbar
       variant="light"
