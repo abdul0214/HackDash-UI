@@ -11,81 +11,130 @@ import {
 export const TicketsTable = () => {
   const pageVisits = [
     {
-      id: 1,
+      id: 0,
       type: "Team Needs Members",
       message: "We are looking for product designer",
       joins: ["asko.seeba", "melisa.akar"],
+      nMessages: null,
       time: "39",
       name: "KoronaMars",
+      resolved: true,
+    },
+    {
+      id: 1,
+      type: "Team Inactive",
+      message: null,
+      joins: "None",
+      nMessages: 25,
+      time: "10",
+      name: "Ventilator",
+      resolved: false,
     },
     {
       id: 2,
-      type: "Team Communicating poorly",
-      message: "Communication score: 10th percentile",
-      joins: "None",
-      time: "10",
-      name: "Ventilator",
-    },
-    {
-      id: 3,
       type: "Team Needs Help",
       message: "Can someone please help us in providing support for internet?",
       joins: "None",
+      nMessages: null,
       time: "5",
       name: "Kri-Assist",
+      resolved: false,
+    },
+    {
+      id: 3,
+      type: "Team Inactive",
+      message: null,
+      joins: "None",
+      nMessages: 20,
+      time: "7",
+      name: "medicine-delivery",
+      resolved: false,
     },
     {
       id: 4,
       type: "Team Inactive",
-      message: "5 messages from 2 members",
+      message: null,
       joins: "None",
-      time: "7",
-      name: "medicine-delivery",
-    },
-    {
-      id: 5,
-      type: "Team Communicating poorly",
-      message: "Communication Score: 12th Percentile",
-      joins: "None",
+      nMessages: 35,
       time: "13",
       name: "EarlyBirds",
+      resolved: false,
     },
   ];
+  const [tableData, setTableData] = useState([]);
 
   const [showDefault, setShowDefault] = useState(false);
+  // const [issue, setIssue] = useState({ id: "", type: "" });
   const handleClose = () => setShowDefault(false);
-  const row = pageVisits[0];
-  // const [row, setRow] = useState([{}]);
-  // const handleClick = (data) => {
-  //   console.log(data);
-  //   setRow({
-  //     ...row,
-  //     data,
-  //   });
-  //   console.log(row);
-  //   setShowDefault(true);
-  // };
+  const row = pageVisits[2];
+
+  const handleRowClick = (data) => {
+    setShowDefault(true);
+    // setIssue((issue) => {
+    //   const newIssue = {
+    //     id: data.id,
+    //     type: data.type,
+    //   };
+    //   return newIssue;
+    // });
+  };
+  const handleResolve = (id) => {
+    pageVisits[id].resolved = true;
+    handleClose();
+  };
+  const handlePin = (id) => {
+    console.log(id);
+  };
+  const JoinsDisplay = (props) => {
+    return props.issue.type == "Team Needs Members" ? (
+      <p>
+        Joins: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        {props.issue.joins.map((join) => (
+          <strong key={`page-visit-${join}`} className="me-auto ms-2">
+            {join},
+          </strong>
+        ))}
+      </p>
+    ) : null;
+  };
+
+  const IssueMessage = (props) => {
+    return props.issue.type != "Team Inactive" ? (
+      <p>
+        Message:&nbsp;&nbsp;&nbsp;
+        <strong className="me-auto ms-2">{props.issue.message}</strong>
+      </p>
+    ) : (
+      <p>
+        No. of Messages:&nbsp;&nbsp;&nbsp;
+        <strong className="me-auto ms-2">{props.issue.nMessages}</strong>
+      </p>
+    );
+  };
   const TableRow = (props) => {
-    const { id, type, message, joins, time, name } = props;
-    return (
-      <tr onClick={() => setShowDefault(true)}>
+    const { id, type, message, joins, time, name, resolved } = props;
+    return !resolved ? (
+      <tr onClick={() => handleRowClick(props)}>
         <td>
           {id}-{type}
         </td>
         {/* <td>{message}</td> */}
         <td>{name}</td>
         <td>{time}m ago</td>
-        <td className="mr-0 pr-0">
-          <Badge bg="success" className="badge-lg">
+        <td className="mr-0 pr-0" style={{ textAlign: "center" }}>
+          <Badge
+            bg="success"
+            className="badge-lg mr-1"
+            style={{ marginRight: "0.5rem" }}
+          >
             RESOLVE
-          </Badge>{" "}
-          &nbsp;
+          </Badge>
           <Badge bg="danger" className="badge-lg">
             PIN
           </Badge>
         </td>
       </tr>
-    );
+    ) : null;
   };
 
   return (
@@ -110,8 +159,8 @@ export const TicketsTable = () => {
               {/* <th scope="col">Message</th> */}
               <th scope="col">Name</th>
               <th scope="col">Time</th>
-              <th scope="col">
-                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {"     "} Action
+              <th scope="col" style={{ textAlign: "center" }}>
+                Action
               </th>
             </tr>
           </thead>
@@ -134,22 +183,11 @@ export const TicketsTable = () => {
           <p>
             Issue Type: <strong className="me-auto ms-2">{row.type}</strong>
           </p>
+          <IssueMessage issue={row} />
+          <JoinsDisplay issue={row} />
           <p>
-            Message:{" "}
-            <strong className="me-auto ms-2">
-              &nbsp;&nbsp;&nbsp; {row.message}
-            </strong>
-          </p>
-          <p>
-            Joins:{" "}
-            {row.joins.map((join) => (
-              <strong key={`page-visit-${join}`} className="me-auto ms-2">
-                {join},
-              </strong>
-            ))}
-          </p>
-          <p>
-            Time: <strong className="me-auto ms-2">{row.time}m ago</strong>
+            Time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <strong className="me-auto ms-2">{row.time}m ago</strong>
           </p>
         </Modal.Body>
         <Modal.Footer className="justify-content-between">
@@ -162,7 +200,7 @@ export const TicketsTable = () => {
             <Button
               variant="success"
               className="text-white"
-              onClick={handleClose}
+              onClick={() => handleResolve(row.id)}
             >
               RESOLVE
             </Button>
