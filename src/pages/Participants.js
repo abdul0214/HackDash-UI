@@ -11,7 +11,9 @@ import {
   Container,
 } from "@themesberg/react-bootstrap";
 
-import { TransactionsTable } from "../components/Tables";
+import ParticipantsTable from "../components/ParticipantsTable";
+
+// import { TransactionsTable, PageVisitsTable } from "../components/Tables";
 
 export default () => {
   return (
@@ -75,7 +77,7 @@ export default () => {
           </Row>
         </div>
 
-        <TransactionsTable />
+        <ParticipantsTable />
       </Container>
     </>
   );
