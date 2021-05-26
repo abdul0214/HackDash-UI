@@ -61,26 +61,42 @@ export const TicketsTable = () => {
       resolved: false,
     },
   ];
-  const [tableData, setTableData] = useState([]);
 
   const [showDefault, setShowDefault] = useState(false);
-  // const [issue, setIssue] = useState({ id: "", type: "" });
+  const [row, setRow] = useState({
+    id: null,
+    type: null,
+    message: null,
+    joins: null,
+    nMessages: null,
+    time: null,
+    name: null,
+    resolved: false,
+  });
   const handleClose = () => setShowDefault(false);
-  const row = pageVisits[2];
+  // const row = pageVisits[2];
 
   const handleRowClick = (data) => {
     setShowDefault(true);
-    // setIssue((issue) => {
-    //   const newIssue = {
-    //     id: data.id,
-    //     type: data.type,
-    //   };
-    //   return newIssue;
-    // });
+    console.log(data);
+    setRow({
+      ...row,
+      id: data.id,
+      type: data.type,
+      message: data.message,
+      joins: data.joins,
+      name: data.name,
+      nMessages: data.nMessages,
+      time: data.time,
+      resolved: data.resolved,
+    });
+
+    // setTimeout(() => {
+    //   setShowDefault(true);
+    // }, 3000);
   };
   const handleResolve = (id) => {
-    pageVisits[id].resolved = true;
-    handleClose();
+    row.resolved = true;
   };
   const handlePin = (id) => {
     console.log(id);
@@ -111,6 +127,7 @@ export const TicketsTable = () => {
       </p>
     );
   };
+
   const TableRow = (props) => {
     const { id, type, message, joins, time, name, resolved } = props;
     return !resolved ? (
@@ -166,7 +183,11 @@ export const TicketsTable = () => {
           </thead>
           <tbody>
             {pageVisits.map((pv) => (
-              <TableRow key={`page-visit-${pv.id}`} {...pv} />
+              <TableRow
+                key={`page-visit-${pv.id}`}
+                {...pv}
+                onClick={() => handleResolve(pv.id)}
+              />
             ))}
           </tbody>
         </Table>
@@ -181,7 +202,7 @@ export const TicketsTable = () => {
             Team Name: <strong className="me-auto ms-2">{row.name}</strong>
           </p>
           <p>
-            Issue Type: <strong className="me-auto ms-2">{row.type}</strong>
+            Issue Type: <strong className="me-auto ms-2"> {row.type}</strong>
           </p>
           <IssueMessage issue={row} />
           <JoinsDisplay issue={row} />
