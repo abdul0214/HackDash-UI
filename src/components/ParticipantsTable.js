@@ -1,47 +1,48 @@
 import React from "react";
 import { Card, Table } from "@themesberg/react-bootstrap";
 
-import { participantData } from "../data/participantData";
+import {
+  participantData,
+  teamlessParticipants,
+  inActiveParticipants,
+  repeatParticipants,
+} from "../data/participantData";
 
-export default () => {
+export default (props) => {
+  const tableData = () => {
+    var data = [];
+    switch (props.selected) {
+      case "inactive":
+        data = inActiveParticipants;
+        break;
+      case "teamless":
+        data = teamlessParticipants;
+        break;
+      case "repeat":
+        data = repeatParticipants;
+        break;
+      default:
+        data = participantData;
+    }
+    return data;
+  };
   const TableRow = (props) => {
     const { name, team, messages, timeSinceJoin, repeatParticipant } = props;
-    // const bounceIcon = bounceRate < 0 ? faArrowDown : faArrowUp;
-    // const bounceTxtColor = bounceRate < 0 ? "text-danger" : "text-success";
 
     return (
       <tr>
         <th scope="row">{name}</th>
-        <td>{team}</td>
-        <td>{messages}</td>
+        <td>{team ? team : "n/a"}</td>
+        <td>{messages ? messages : "n/a"}</td>
         <td>{timeSinceJoin}</td>
-        <td>{repeatParticipant}</td>
-
-        {/* <td>
-          <FontAwesomeIcon
-            icon={bounceIcon}
-            className={`${bounceTxtColor} me-3`}
-          />
-          {Math.abs(bounceRate)}%
-        </td> */}
+        <td>{repeatParticipant ? "Yes" : "No"}</td>
       </tr>
     );
   };
 
   return (
     <Card border="light" className="shadow-sm">
-      <Card.Header>
-        {/* <Row className="align-items-center">
-          <Col>
-            <h5>Hackathon Tickets</h5>
-          </Col>
-          <Col className="text-end">
-            <Button variant="secondary" size="sm">
-              See all
-            </Button>
-          </Col>
-        </Row> */}
-      </Card.Header>
+      <Card.Header></Card.Header>
       <Table responsive className="align-items-center table-flush">
         <thead className="thead-light">
           <tr>
@@ -53,7 +54,7 @@ export default () => {
           </tr>
         </thead>
         <tbody>
-          {participantData.map((pv) => (
+          {tableData().map((pv) => (
             <TableRow key={`page-visit-${pv.id}`} {...pv} />
           ))}
         </tbody>

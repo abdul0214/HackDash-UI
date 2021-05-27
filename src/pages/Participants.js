@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCheck, faCog } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -13,9 +13,8 @@ import {
 
 import ParticipantsTable from "../components/ParticipantsTable";
 
-// import { TransactionsTable, PageVisitsTable } from "../components/Tables";
-
 export default () => {
+  const [selected, setSelected] = useState("all");
   return (
     <>
       <Container>
@@ -31,16 +30,14 @@ export default () => {
         <div className="table-settings mb-4">
           <Row className="justify-content-between align-items-center">
             <Col xs={8} md={6} lg={3} xl={4}>
-              {/* <InputGroup>
-              <InputGroup.Text>
-                <FontAwesomeIcon icon={faSearch} />
-              </InputGroup.Text>
-              <Form.Control type="text" placeholder="Search" />
-            </InputGroup> */}
               <Form.Group className="mb-2">
                 <Form.Label>Filter table</Form.Label>
-                <Form.Select id="state" defaultValue="0">
-                  <option value="0">All Participants selected</option>
+                <Form.Select
+                  id="state"
+                  value={selected}
+                  onChange={(event) => setSelected(event.target.value)}
+                >
+                  <option value="all">All Participants selected</option>
                   <option value="inactive">InActive Participants</option>
                   <option value="teamless">Teamless Participants</option>
                   <option value="repeat">Repeat Participants</option>
@@ -77,7 +74,7 @@ export default () => {
           </Row>
         </div>
 
-        <ParticipantsTable />
+        <ParticipantsTable selected={selected} />
       </Container>
     </>
   );
