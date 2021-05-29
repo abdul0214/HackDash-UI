@@ -8,61 +8,10 @@ import {
   Modal,
   Badge,
 } from "@themesberg/react-bootstrap";
+import { pageVisits } from "../data/participantData";
 export const TicketsTable = () => {
-  const pageVisits = [
-    {
-      id: 0,
-      type: "Team Needs Members",
-      message: "We are looking for product designer",
-      joins: ["asko.seeba", "melisa.akar"],
-      nMessages: null,
-      time: "39",
-      name: "KoronaMars",
-      resolved: true,
-    },
-    {
-      id: 1,
-      type: "Team Inactive",
-      message: null,
-      joins: "None",
-      nMessages: 25,
-      time: "10",
-      name: "Ventilator",
-      resolved: false,
-    },
-    {
-      id: 2,
-      type: "Team Needs Help",
-      message: "Can someone please help us in providing support for internet?",
-      joins: "None",
-      nMessages: null,
-      time: "5",
-      name: "Kri-Assist",
-      resolved: false,
-    },
-    {
-      id: 3,
-      type: "Team Inactive",
-      message: null,
-      joins: "None",
-      nMessages: 20,
-      time: "7",
-      name: "medicine-delivery",
-      resolved: false,
-    },
-    {
-      id: 4,
-      type: "Team Inactive",
-      message: null,
-      joins: "None",
-      nMessages: 35,
-      time: "13",
-      name: "EarlyBirds",
-      resolved: false,
-    },
-  ];
-
   const [showDefault, setShowDefault] = useState(false);
+  const [rows, setRows] = useState(pageVisits);
   const [row, setRow] = useState({
     id: null,
     type: null,
@@ -78,7 +27,6 @@ export const TicketsTable = () => {
 
   const handleRowClick = (data) => {
     setShowDefault(true);
-    console.log(data);
     setRow({
       ...row,
       id: data.id,
@@ -96,7 +44,10 @@ export const TicketsTable = () => {
     // }, 3000);
   };
   const handleResolve = (id) => {
-    row.resolved = true;
+    pageVisits[id].resolved = true;
+    console.log(pageVisits);
+    setRows(pageVisits);
+    handleClose();
   };
   const handlePin = (id) => {
     console.log(id);
@@ -182,7 +133,7 @@ export const TicketsTable = () => {
             </tr>
           </thead>
           <tbody>
-            {pageVisits.map((pv) => (
+            {rows.map((pv) => (
               <TableRow
                 key={`page-visit-${pv.id}`}
                 {...pv}

@@ -326,9 +326,63 @@ const inActiveParticipants = [
     repeatParticipant: false,
   },
 ];
+
+const pageVisits = [
+  {
+    id: 0,
+    type: "Team Needs Members",
+    message: "We are looking for product designer",
+    joins: ["asko.seeba", "melisa.akar"],
+    nMessages: null,
+    time: "39",
+    name: "KoronaMars",
+    resolved: false,
+  },
+  {
+    id: 1,
+    type: "Team Inactive",
+    message: null,
+    joins: "None",
+    nMessages: 25,
+    time: "10",
+    name: "Ventilator",
+    resolved: false,
+  },
+  {
+    id: 2,
+    type: "Team Needs Help",
+    message: "Can someone please help us in providing support for internet?",
+    joins: "None",
+    nMessages: null,
+    time: "5",
+    name: "Kri-Assist",
+    resolved: false,
+  },
+  {
+    id: 3,
+    type: "Team Inactive",
+    message: null,
+    joins: "None",
+    nMessages: 20,
+    time: "7",
+    name: "medicine-delivery",
+    resolved: false,
+  },
+  {
+    id: 4,
+    type: "Team Inactive",
+    message: null,
+    joins: "None",
+    nMessages: 35,
+    time: "13",
+    name: "EarlyBirds",
+    resolved: false,
+  },
+];
 export {
   participantData,
   teamlessParticipants,
   repeatParticipants,
   inActiveParticipants,
+  pageVisits,
 };
