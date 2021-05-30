@@ -338,6 +338,7 @@ const pageVisits = [
     name: "KoronaMars",
     resolved: false,
     status: "open",
+    notes: null,
   },
   {
     id: 1,
@@ -349,6 +350,7 @@ const pageVisits = [
     name: "Ventilator",
     resolved: false,
     status: "open",
+    notes: null,
   },
   {
     id: 2,
@@ -360,6 +362,7 @@ const pageVisits = [
     name: "Kri-Assist",
     resolved: false,
     status: "open",
+    notes: null,
   },
   {
     id: 3,
@@ -371,6 +374,7 @@ const pageVisits = [
     name: "medicine-delivery",
     resolved: false,
     status: "open",
+    notes: ["waiting response on this issue"],
   },
   {
     id: 4,
@@ -382,6 +386,7 @@ const pageVisits = [
     name: "EarlyBirds",
     resolved: false,
     status: "open",
+    notes: ["this issue was invalid"],
   },
 ];
 export {

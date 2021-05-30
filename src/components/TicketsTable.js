@@ -1,21 +1,9 @@
 import React, { useState } from "react";
-import {
-  Col,
-  Row,
-  Card,
-  Button,
-  Table,
-  Modal,
-  Badge,
-  Form,
-} from "@themesberg/react-bootstrap";
+import { Col, Row, Card, Table, Form } from "@themesberg/react-bootstrap";
+import { TicketsTableRow } from "./TicketsTableComponents";
 import { pageVisits } from "../data/participantData";
+import { IssueModal } from "./IssueModal";
 export const TicketsTable = () => {
-  const statusColorMap = {
-    resolved: "success",
-    open: "warning",
-    pinned: "danger",
-  };
   const [issueFilter, setIssueFilter] = useState("all");
   const [showDefault, setShowDefault] = useState(false);
   const [rows, setRows] = useState(pageVisits);
@@ -56,55 +44,8 @@ export const TicketsTable = () => {
     setRows(pageVisits);
     handleClose();
   };
-  const JoinsDisplay = (props) => {
-    return props.issue.type == "Team Needs Members" ? (
-      <p>
-        Joins: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-        {props.issue.joins.map((join) => (
-          <strong key={`page-visit-${join}`} className="me-auto ms-2">
-            {join},
-          </strong>
-        ))}
-      </p>
-    ) : null;
-  };
-
-  const IssueMessage = (props) => {
-    return props.issue.type != "Team Inactive" ? (
-      <p>
-        Message:&nbsp;&nbsp;&nbsp;
-        <strong className="me-auto ms-2">{props.issue.message}</strong>
-      </p>
-    ) : (
-      <p>
-        No. of Messages:&nbsp;&nbsp;&nbsp;
-        <strong className="me-auto ms-2">{props.issue.nMessages}</strong>
-      </p>
-    );
-  };
-
   const IssueFilter = (issue) => {
-    return issueFilter == "all" ? true : issue.status == issueFilter;
-  };
-  const TableRow = (props) => {
-    const { id, type, message, joins, time, name, resolved, status } = props;
-    return (
-      <tr onClick={() => handleRowClick(props)}>
-        <td>{id}</td>
-        <td>{type}</td>
-        <td>{name}</td>
-        <td>{time}m ago</td>
-        <td className="mr-0 pr-0" style={{ textAlign: "center" }}>
-          <Badge
-            bg={statusColorMap[status]}
-            className="badge-lg mr-1"
-            style={{ marginRight: "0.5rem" }}
-          >
-            {status.toUpperCase()}
-          </Badge>
-        </td>
-      </tr>
-    );
+    return issueFilter === "all" ? true : issue.status === issueFilter;
   };
 
   return (
@@ -146,55 +87,22 @@ export const TicketsTable = () => {
           </thead>
           <tbody>
             {rows.filter(IssueFilter).map((pv) => (
-              <TableRow key={`page-visit-${pv.id}`} {...pv} />
+              <TicketsTableRow
+                key={`page-visit-${pv.id}`}
+                {...pv}
+                handleRowClick={handleRowClick}
+              />
             ))}
           </tbody>
         </Table>
       </Card>
-      <Modal as={Modal.Dialog} centered show={showDefault} onHide={handleClose}>
-        <Modal.Header>
-          <Modal.Title className="h6">Issue Details</Modal.Title>
-          <Button variant="close" aria-label="Close" onClick={handleClose} />
-        </Modal.Header>
-        <Modal.Body>
-          <p>
-            Team Name: <strong className="me-auto ms-2">{row.name}</strong>
-          </p>
-          <p>
-            Issue Type: <strong className="me-auto ms-2"> {row.type}</strong>
-          </p>
-          <IssueMessage issue={row} />
-          <JoinsDisplay issue={row} />
-          <p>
-            Time: &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <strong className="me-auto ms-2">{row.time}m ago</strong>
-          </p>
-        </Modal.Body>
-        <Modal.Footer className="justify-content-between">
-          <div>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-          </div>
-          <div className="align-items-end">
-            <Button
-              variant="success"
-              className="text-white"
-              onClick={() => handleResolve(row.id)}
-            >
-              RESOLVE
-            </Button>
-            &nbsp;
-            <Button
-              variant="danger"
-              className="text-white"
-              onClick={() => handlePin(row.id)}
-            >
-              PIN
-            </Button>
-          </div>
-        </Modal.Footer>
-      </Modal>
+      <IssueModal
+        row={row}
+        showDefault={showDefault}
+        handleClose={handleClose}
+        handleResolve={handleResolve}
+        handlePin={handlePin}
+      />
     </>
   );
 };
