@@ -337,6 +337,7 @@ const pageVisits = [
     time: "39",
     name: "KoronaMars",
     resolved: false,
+    status: "open",
   },
   {
     id: 1,
@@ -347,6 +348,7 @@ const pageVisits = [
     time: "10",
     name: "Ventilator",
     resolved: false,
+    status: "open",
   },
   {
     id: 2,
@@ -357,6 +359,7 @@ const pageVisits = [
     time: "5",
     name: "Kri-Assist",
     resolved: false,
+    status: "open",
   },
   {
     id: 3,
@@ -367,6 +370,7 @@ const pageVisits = [
     time: "7",
     name: "medicine-delivery",
     resolved: false,
+    status: "open",
   },
   {
     id: 4,
@@ -377,6 +381,7 @@ const pageVisits = [
     time: "13",
     name: "EarlyBirds",
     resolved: false,
+    status: "open",
   },
 ];
 export {

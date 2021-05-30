@@ -7,9 +7,16 @@ import {
   Table,
   Modal,
   Badge,
+  Form,
 } from "@themesberg/react-bootstrap";
 import { pageVisits } from "../data/participantData";
 export const TicketsTable = () => {
+  const statusColorMap = {
+    resolved: "success",
+    open: "warning",
+    pinned: "danger",
+  };
+  const [issueFilter, setIssueFilter] = useState("all");
   const [showDefault, setShowDefault] = useState(false);
   const [rows, setRows] = useState(pageVisits);
   const [row, setRow] = useState({
@@ -21,10 +28,9 @@ export const TicketsTable = () => {
     time: null,
     name: null,
     resolved: false,
+    status: null,
   });
   const handleClose = () => setShowDefault(false);
-  // const row = pageVisits[2];
-
   const handleRowClick = (data) => {
     setShowDefault(true);
     setRow({
@@ -38,19 +44,17 @@ export const TicketsTable = () => {
       time: data.time,
       resolved: data.resolved,
     });
-
-    // setTimeout(() => {
-    //   setShowDefault(true);
-    // }, 3000);
   };
   const handleResolve = (id) => {
     pageVisits[id].resolved = true;
-    console.log(pageVisits);
+    pageVisits[id].status = "resolved";
     setRows(pageVisits);
     handleClose();
   };
   const handlePin = (id) => {
-    console.log(id);
+    pageVisits[id].status = "pinned";
+    setRows(pageVisits);
+    handleClose();
   };
   const JoinsDisplay = (props) => {
     return props.issue.type == "Team Needs Members" ? (
@@ -79,30 +83,28 @@ export const TicketsTable = () => {
     );
   };
 
+  const IssueFilter = (issue) => {
+    return issueFilter == "all" ? true : issue.status == issueFilter;
+  };
   const TableRow = (props) => {
-    const { id, type, message, joins, time, name, resolved } = props;
-    return !resolved ? (
+    const { id, type, message, joins, time, name, resolved, status } = props;
+    return (
       <tr onClick={() => handleRowClick(props)}>
-        <td>
-          {id}-{type}
-        </td>
-        {/* <td>{message}</td> */}
+        <td>{id}</td>
+        <td>{type}</td>
         <td>{name}</td>
         <td>{time}m ago</td>
         <td className="mr-0 pr-0" style={{ textAlign: "center" }}>
           <Badge
-            bg="success"
+            bg={statusColorMap[status]}
             className="badge-lg mr-1"
             style={{ marginRight: "0.5rem" }}
           >
-            RESOLVE
-          </Badge>
-          <Badge bg="danger" className="badge-lg">
-            PIN
+            {status.toUpperCase()}
           </Badge>
         </td>
       </tr>
-    ) : null;
+    );
   };
 
   return (
@@ -113,32 +115,38 @@ export const TicketsTable = () => {
             <Col>
               <h5>All issues/Tickets</h5>
             </Col>
-            <Col className="text-end">
-              <Button variant="secondary" size="sm">
-                See all
-              </Button>
+            <Col xs={8} md={6} lg={3} xl={2}>
+              <Form.Group className="mb-2">
+                {/* <Form.Label>Filter issues by status</Form.Label> */}
+                <Form.Select
+                  id="state"
+                  value={issueFilter}
+                  onChange={(event) => setIssueFilter(event.target.value)}
+                >
+                  <option value="all">All Issues</option>
+                  <option value="resolved">Resolved issues</option>
+                  <option value="open">Open issues</option>
+                  <option value="pinned">Pinned issues</option>
+                </Form.Select>
+              </Form.Group>
             </Col>
           </Row>
         </Card.Header>
         <Table hover responsive className="align-items-center table-flush">
           <thead className="thead-light">
             <tr>
+              <th scope="col">Id</th>
               <th scope="col">Type</th>
-              {/* <th scope="col">Message</th> */}
               <th scope="col">Name</th>
               <th scope="col">Time</th>
               <th scope="col" style={{ textAlign: "center" }}>
-                Action
+                Status
               </th>
             </tr>
           </thead>
           <tbody>
-            {rows.map((pv) => (
-              <TableRow
-                key={`page-visit-${pv.id}`}
-                {...pv}
-                onClick={() => handleResolve(pv.id)}
-              />
+            {rows.filter(IssueFilter).map((pv) => (
+              <TableRow key={`page-visit-${pv.id}`} {...pv} />
             ))}
           </tbody>
         </Table>
@@ -180,7 +188,7 @@ export const TicketsTable = () => {
             <Button
               variant="danger"
               className="text-white"
-              onClick={handleClose}
+              onClick={() => handlePin(row.id)}
             >
               PIN
             </Button>
